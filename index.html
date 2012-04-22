@@ -64,15 +64,15 @@ $(document).ready(function() {
     var defaultParcelStyle = {
             color: "#009900",
             weight: 1,
-            opacity: 0.6,
-            fillOpacity: 0.2,
+            opacity: 1,
+            fillOpacity: 0.5,
             fillColor: "#00FF00"
         },
         selectedParcelStyle = {
             color: '#2262CC',
             weight: 3,
-            opacity: 0.6,
-            fillOpacity: 0.65,
+            opacity: 1,
+            fillOpacity: 0.5,
             fillColor: '#2262CC'
         };
     
@@ -177,6 +177,7 @@ $(document).ready(function() {
                               "<h3>Lease</h3><p>" + lease + "</p>" +
                               "<h3>Use</h3><p>" + use + "</p>" +
                               "<h3>Square Footage</h3><p>" + footage + "</p>" +
+                              "<h3>Contact</h3><p>" + "[coming soon]" + "</p>" +
                               "</div>";
                 $(details).appendTo(popup);
                 // Add the popup to the map
