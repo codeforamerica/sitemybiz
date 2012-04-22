@@ -1,0 +1,7 @@
+Pygments==1.5
+beautifulsoup4==4.0.3
+pdfminer==20110515
+pymongo==2.1.1
+virtualenv==1.7.1.2
+virtualenvwrapper==3.1
+wsgiref==0.1.2

@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>SiteMy.Biz -> Santa Cruz</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.css">
+  <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.ie.css">
+
+  <!-- Google Web Fonts -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Gudea|Patua+One">
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <div id="header">
+    <h1 class="masthead">SiteMy.Biz</h1>
+    <p class="tagline">Find commercial space for rent in Santa Cruz.</p>
+    <ul style="display:none;">
+      <li><a href="#">Submit a listing</a></li>
+      <li><a href="#">About this site</a></li>
+    </ul>
+  </div>
+
+  <!-- Detail container -->
+  <div id="detail"></div>
+
+  <!-- Map container -->
+  <div id="map"></div>
+
+  <!-- scripts -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+    
+    // === MAP ===
+    
+    var map = new L.Map('map'),                         // Create map object and point it to <div id="map">
+        mapCenter = new L.LatLng(36.97513,-122.024117), // Set map center to Santa Cruz
+        mapZoom = 14;                                   // Set initial zoom level
+    
+    // === BASE LAYER ===
+    
+    // Create base layer (using Toner tiles from Stamen)
+    var baseUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.jpg',
+        attrib = 'Map tiles by Stamen',
+        baseLayer = new L.TileLayer(baseUrl, {attribution: attrib, maxZoom:18});
+    
+    // Add the base layer to map
+    map.addLayer(baseLayer);
+    
+    // Center and zoom on base layer
+    map.setView(mapCenter, mapZoom);
+    
+    // === AVAILABLE PROPERTIES LAYER ===
+    
+    // Define default and highlight styles for the property points
+    var defaultPropertyStyle = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        },
+        highlightPropertyStyle = {
+            radius: 8,
+            fillColor: "#FF0000",
+            color: "#FFF",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+    
+    // Create an empty layer where we will load the property points
+    var propertyLayer = new L.GeoJSON(null, {
+        pointToLayer: function (latlng) {
+            return new L.CircleMarker(latlng, defaultPropertyStyle);
+        }
+    });
+    
+    // Gets all documents from MongoHQ recursively, 100 at a time
+    function findProperties(collection, results, skipCount) {
+        
+        var dataUri = 'https://api.mongohq.com/databases/sitemybiz/collections/' + 
+                      collection + "/" +
+                      'documents?' +
+                      '_apikey=' + 'unyeh7o6sy69tw0lw5y8' + '&' +
+                      'limit=' + '100' + '&' + 
+                      'skip=' + skipCount;
+        
+        // keep calling until we cannot get any more data from API
+        $.getJSON(dataUri, function(data) {
+            if (data.length > 0) {
+                results = $.merge(results, data);
+                skipCount += 100;
+                findProperties(collection, results, skipCount);
+            } else {
+                // Add property data layer to map
+                map.addLayer(propertyLayer);
+                
+                // Add GeoJSON for property data into the property layer
+                for (var i = 0; i < results.length; i++) {
+                    // Manually create a well-structured GeoJSON object because the data is crap
+                    propertyJSON = {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                results[i]['lat'],
+                                results[i]['long']
+                            ]
+                        },
+                        "properties": {
+                            "address": results[i]['ADDRESS'],
+                            "footage": results[i]['SQFEET'],
+                            "type":    results[i]['TYPE']
+                        }
+                    };
+                    propertyLayer.addGeoJSON(propertyJSON);
+                }
+
+var marker = new L.Marker(latlng);
+map.addLayer(marker);
+
+null, {
+                            pointToLayer: function (latlng){
+                                return new L.CircleMarker(latlng, defaultPropertyStyle);
+                            }
+                        }
+                        
+
+            }
+        });
+    }
+    
+    // Get property data from MongoHQ and plot it
+    findProperties('properties' , [], 0);
+    
+    // === AVAILABLE PARCEL LAYER ===
+    
+    // Create an empty layer where we will load the parcel polygons
+    var parcelLayer = new L.GeoJSON();
+    
+    // Define default and highlight styles for the parcel polygons
+    var defaultParcelStyle = {
+            color: "#009900",
+            weight: 1,
+            opacity: 0.6,
+            fillOpacity: 0.2,
+            fillColor: "#00FF00"
+        },
+        selectedParcelStyle = {
+            color: '#2262CC',
+            weight: 3,
+            opacity: 0.6,
+            fillOpacity: 0.65,
+            fillColor: '#2262CC'
+        };
+    
+    // Define what happens to each polygon just before it is loaded onto
+    // the map. This is Leaflet's special way of goofing around with your
+    // data, setting styles and regulating user interactions.
+    parcelLayer.on("featureparse", function (e) {
+
+        // Load the default style
+        e.layer.setStyle(defaultParcelStyle);
+        
+        // Create a self-invoking function that passes in the layer
+        // and the properties associated with this particular record.
+        (function(layer, properties) {
+            
+            // Create a mouseover event
+            layer.on("mouseover", function (e) {
+            
+                // Change the style to the highlighted version
+                layer.setStyle(selectedParcelStyle);
+                
+                // Create a popup with a unique ID linked to this record
+                var popup = $("<div></div>", {
+                    id: "popup-" + properties.APN,
+                    css: {
+                        backgroundColor: "white",
+                        border: "1px solid #ccc",
+                        top: "20%",
+                        padding: "0",
+                        position: "absolute",
+                        right: "10%",
+                        width: "20%",
+                        zIndex: 1002
+                    }
+                });
+                // Insert a headline into that popup
+                var hed = $("<div></div>", {
+                    text: "APN: " + properties.APN,
+                    css: {fontSize: "16px", marginBottom: "3px"}
+                }).appendTo(popup);
+                // Add the popup to the map
+                popup.appendTo("#map");
+            });
+            
+            // Create a mouseout event that undoes the mouseover changes
+            layer.on("mouseout", function (e) {
+                // Reverting the style to default
+                layer.setStyle(defaultParcelStyle);
+                // Destroy the popup
+                $("#popup-" + properties.APN).remove();
+            });
+        
+        // Close the "anonymous" wrapper function, and call it while passing
+        // in the variables necessary to make the events work the way we want.
+        })(e.layer, e.properties);
+
+    });
+    
+    // Gets all documents from MongoHQ recursively, 100 at a time
+    function findParcels(collection, results, skipCount) {
+        
+        var dataUri = 'https://api.mongohq.com/databases/sitemybiz/collections/' + 
+                      collection + "/" +
+                      'documents?' +
+                      '_apikey=' + 'unyeh7o6sy69tw0lw5y8' + '&' +
+                      'limit=' + '100' + '&' + 
+                      'skip=' + skipCount;
+        
+        // keep calling until we cannot get any more data from API
+        $.getJSON(dataUri, function(data) {
+            if (data.length > 0) {
+                results = $.merge(results, data);
+                skipCount += 100;
+                findParcels(collection, results, skipCount);
+            } else {
+                // Add GeoJSON for parcel data into the parcel layer
+                for (var i = 0; i < results.length; i++) {
+                    parcelLayer.addGeoJSON(results[i]);
+                }
+                
+                // Add parcel data layer to map
+                map.addLayer(parcelLayer);
+            }
+        });
+    }
+    
+    // Get parcel data from MongoHQ and plot it
+    findParcels('available_parcels' , [], 0);
+    
+});
+</script>
+
+</body>
+</html>
