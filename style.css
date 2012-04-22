@@ -73,15 +73,17 @@ body {
 /* === Links ======================== */
 
 a {
-  color: #1ca5be;
+  color: #c5d7f5 !important; /* important declaration because otherwise leaflet.js overrides */
+  border-bottom: 1px dotted #FFF !important;
+  text-decoration: none !important;
 }
 
 a:visited {
-  color: #167f91;
+  color: #99b9ee;
 }
 
 a:hover {
-  color: #1ca5be;
+  color: #c5d7f5;
 }
 
 a:focus {
@@ -338,6 +340,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Patua One', cursive;
+  font-weight: normal;
 }
 
 /* === Masthead ===================== */
@@ -353,27 +356,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header h1 {
-  background: #F00;
-  position: relative;
+  background: url("signboard_blue.png") no-repeat 0 0;
   float: left;
-  width: 20%;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 3px 0 1px 0;
-  white-space:nowrap;
-  overflow: hidden;
   min-width: 200px;
+  width: 278px;
+  height: 129px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  white-space:nowrap;
+  margin: 0;
+  font-size: 3em;
+  padding-top: 1em;
+  color: #FFF;
 }
 
 #header .tagline {
-  background: #FFF;
+
+  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.8); 
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCFFFFFF,endColorstr=#CCFFFFFF);
+            zoom: 1;
+
+
   position: relative;
   float: left;
-  width: 70%;
+  width: 50%;
   margin-left: 5%;
   padding: 0;
-  font-size: 2em;
-  border-bottom: 3px solid #000;
+  font-size: 1.5em;
 }
 
 /* === Explanation ================== */
