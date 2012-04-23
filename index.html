@@ -46,7 +46,7 @@ $(document).ready(function() {
     
     // Create base layer (using Toner tiles from Stamen)
     var baseUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.jpg',
-        attrib = 'Map tiles by Stamen',
+        attrib = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
         baseLayer = new L.TileLayer(baseUrl, {attribution: attrib, maxZoom:18});
     
     // Add the base layer to map
