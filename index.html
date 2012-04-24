@@ -34,13 +34,211 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
   <script type="text/javascript">
+
+// === CONFIG ===
+
+// map center
+var LATLNG_CENTER = { 'lat': 36.97513 , 'lng': -122.024117 }; // Santa Cruz, dude
+
+// set initial zoom level
+var ZOOM = 14;
+
+// Define default and highlight styles for the parcel polygons
+var defaultParcelStyle = {
+        color: '#009900',
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.5,
+        fillColor: '#00FF00'
+    },
+    selectedParcelStyle = {
+        color: '#2262CC',
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.5,
+        fillColor: '#2262CC'
+    };
+
+
+function createPopupContent(properties) {
+    
+    var address = createAddressString(properties),
+        zoning = createZoningString(properties),
+        lease = createLeaseString(properties),
+        use = createUseString(properties),
+        footage = createFootageString(properties),
+        details = '<div>' + 
+                  '<h3>Address</h3><p>' + address + '</p>' +
+                  '<h3>Zoning</h3><p>' + zoning + '</p>' +
+                  '<h3>APN</h3><p>' + properties.APN + '</p>' +
+                  '<h3>Lease</h3><p>' + lease + '</p>' +
+                  '<h3>Use</h3><p>' + use + '</p>' +
+                  '<h3>Square Footage</h3><p>' + footage + '</p>' +
+                  '<h3>Contact</h3><p>' + '[coming soon]' + '</p>' +
+                  '</div>';
+                  
+        return details;
+}
+
+// TODO make this work for craigslist data
+function createAddressString(properties) {
+    
+    var address = '';
+    
+    if (properties.property_address_street) {
+        address = properties.property_address_street;
+    }
+    
+    if ( (properties.property_address_street) && ( (properties.property_address_city) || (properties.property_address_state) || (properties.property_address_zip) ) ) {
+        address = address + '<br>';
+    }
+    
+    if (properties.property_address_city) {
+        address = address + properties.property_address_city;
+    }
+    
+    if ( (properties.property_address_city) && (properties.property_address_state) ) {
+        address = address + ', ';
+    }
+    
+    if (properties.property_address_state) {
+        address = address + properties.property_address_state;
+    }
+    
+    if ( (properties.property_address_state) && (properties.property_address_zip) ) {
+        address = address + ' ';
+    }
+    
+    if (properties.property_address_zip) {
+        address = address + properties.property_address_zip;
+    }
+    
+    return address;
+    
+}
+
+
+function createZoningString(properties) {
+    
+    var zoning = '';
+    
+    if (properties.property_zoning_1_full) {
+        zoning = properties.property_zoning_1_full;
+    }
+    
+    if (properties.property_zoning_1_full && properties.property_zoning_2_full) {
+        zoning = zoning + ' and ';
+    }
+    
+    if (properties.property_zoning_2_full) {
+        zoning = zoning + properties.property_zoning_2_full;
+    }
+    
+    if ( (properties.property_zoning_2_full && properties.property_zoning_3_full)
+         ||
+         (properties.property_zoning_1_full && properties.property_zoning_3_full) ) {
+        zoning = zoning + ' and ';
+    }
+    
+    if (properties.property_zoning_3_full) {
+        zoning = zoning + properties.property_zoning_3_full;
+    }
+    
+    return zoning;
+}
+
+function createLeaseString(properties) {
+    
+    var lease = '';
+    
+    if (properties.property_gross) {
+        lease = '$' + properties.property_gross + '/ft<sup>2</sup> gross (<a href="#">What does this mean?</a>)';
+    }
+    
+    if (properties.property_nnn) {
+        lease = '$' + properties.property_nnn + '/ft<sup>2</sup> NNN (<a href="#">What does this mean?</a>)';
+    }
+    
+    if (lease === '') {
+        lease = 'Lease terms unlisted. Lame.';
+    }
+    
+    return lease;
+    
+}
+
+// TODO 'use' will be a reserved word, change this.
+function createUseString(properties) {
+    
+    var use = '';
+    
+    if (properties.property_use_type_simple) {
+        use = properties.property_use_type_simple;
+    }
+    
+    return use;
+    
+}
+
+function createFootageString(properties) {
+    
+    var footage = '';
+    
+    if (properties.property_footage) {
+        footage = properties.property_footage + ' ft<sup>2</sup>';
+    }
+    
+    if (properties.property_footage && properties.property_footage_range) {
+        footage = footage + '<br>';
+    }
+    
+    if (properties.property_footage_range) {
+        footage = footage + '(Range of ' + properties.property_footage_range + ' ft<sup>2</sup>)';
+    }
+    
+    return footage;
+    
+}
+
+function createPopup(event, layer, properties) {
+    
+    // Change the style to the highlighted version
+    layer.setStyle(selectedParcelStyle);
+    
+    // Create a popup with a unique ID linked to this record
+    var popup = $('<div></div>', {
+        'id':    'popup-' + properties.APN,
+        'class': 'popup'
+    });
+    
+    // Create popup content
+    var popupContent = createPopupContent(properties);
+    
+    // Append popup content to the popup
+    $(popupContent).appendTo(popup);
+
+    // Add the popup to the map
+    popup.appendTo('#map');
+}
+
+function destroyPopup(event, layer, properties) {
+    
+    // Reverting the style to default
+    layer.setStyle(defaultParcelStyle);
+    
+    // Destroy the popup
+    $('#popup-' + properties.APN).remove();
+    
+}
+
+
 $(document).ready(function() {
     
     // === MAP ===
     
     var map = new L.Map('map'),                         // Create map object and point it to <div id="map">
-        mapCenter = new L.LatLng(36.97513,-122.024117), // Set map center to Santa Cruz
-        mapZoom = 14;                                   // Set initial zoom level
+        mapCenter = new L.LatLng(LATLNG_CENTER['lat'], LATLNG_CENTER['lng']), // Set map center
+        mapZoom = ZOOM;                                 // Set initial zoom level
     
     // === BASE LAYER ===
     
@@ -60,26 +258,10 @@ $(document).ready(function() {
     // Create an empty layer where we will load the parcel polygons
     var parcelLayer = new L.GeoJSON();
     
-    // Define default and highlight styles for the parcel polygons
-    var defaultParcelStyle = {
-            color: "#009900",
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.5,
-            fillColor: "#00FF00"
-        },
-        selectedParcelStyle = {
-            color: '#2262CC',
-            weight: 3,
-            opacity: 1,
-            fillOpacity: 0.5,
-            fillColor: '#2262CC'
-        };
-    
     // Define what happens to each polygon just before it is loaded onto
     // the map. This is Leaflet's special way of goofing around with your
     // data, setting styles and regulating user interactions.
-    parcelLayer.on("featureparse", function (e) {
+    parcelLayer.on('featureparse', function (e) {
 
         // Load the default style
         e.layer.setStyle(defaultParcelStyle);
@@ -87,109 +269,70 @@ $(document).ready(function() {
         // Create a self-invoking function that passes in the layer
         // and the properties associated with this particular record.
         (function(layer, properties) {
+        
+            var clicked = false;
             
             // On mouseover, show details
-            layer.on("mouseover", function (e) {
+            layer.on('mouseover', function (event) {
             
-                // Change the style to the highlighted version
-                layer.setStyle(selectedParcelStyle);
+                createPopup(event, layer, properties);
                 
-                // Create a popup with a unique ID linked to this record
-                var popup = $("<div></div>", {
-                    id: "popup-" + properties.APN,
-                    css: {
-                        backgroundColor: "#2262CC",
-                        borderLeft: "5px solid #ccc",
-                        color: "#FFFFFF",
-                        top: "0",
-                        padding: "1em 10px",
-                        position: "absolute",
-                        right: "0",
-                        height: "100%",
-                        width: "20%",
-                        zIndex: 1002
-                    }
-                });
+            });
+            
+            /*
+            States:
+            
+            Initial load: all parcels <default>
+            
+            If one parcel is hovered and no parcels are selected,
+                show that parcel's data
+            
+            If one parcel is selected,
+                deselect any other parcels that are selected
+                show that parcel's data
+                
+            If one parcel is hovered and one is selected,
+                
+            
+            default
+            
+            
+            hovered
+            selected
+            
+            No parcel highlighted, user mouses over a parcel.
+            1 parcel highlighted, user mouses over another parcel.
+            
+            
+            
+            
+            */
+            
+            
+            // On click, persist details
+            layer.on('click', function (event) {
+                
+                setTimeout(function(){
+                
+                    $(document).one('click', function (event) {
+                        destroyPopup(event, layer, properties);
+                    });
 
-                var address = "",
-                    zoning = "",
-                    lease = "",
-                    use = "",
-                    footage = "";
                 
-                // address
-                address = properties.property_address_street +
-                          "<br>" +
-                          properties.property_address_city +
-                          " " +
-                          properties.property_address_state +
-                          ", " +
-                          properties.property_address_zip;
-
-                // zoning
-                // TODO make this smell better
-                if (properties.property_zoning_1_full) {
-                    zoning = properties.property_zoning_1_full;
-                }
-                if (properties.property_zoning_1_full && properties.property_zoning_2_full) {
-                    zoning = zoning + " and ";
-                }
-                if (properties.property_zoning_2_full) {
-                    zoning = zoning + properties.property_zoning_2_full;
-                }
-                if ((properties.property_zoning_2_full && properties.property_zoning_3_full) || 
-                   (properties.property_zoning_1_full && properties.property_zoning_3_full)) {
-                    zoning = zoning + " and ";
-                }
-                if (properties.property_zoning_3_full) {
-                    zoning = zoning + properties.property_zoning_3_full;
-                }
+                }, 0);
                 
-                // lease cost and terms
-                if (properties.property_gross) {
-                    lease = '$' + properties.property_gross + '/ft<sup>2</sup> gross (<a href="#">What does this mean?</a>)';
-                }
-                if (properties.property_nnn) {
-                    lease = '$' + properties.property_nnn + '/ft<sup>2</sup> NNN (<a href="#">What does this mean?</a>)';
-                }
-                if (lease === "") {
-                    lease = "Lease terms unlisted. Lame.";
-                }
+                clicked = true;
                 
-                // use type
-                if (properties.property_use_type_simple) {
-                    use = properties.property_use_type_simple;
-                }
-                
-                // square footage
-                if (properties.property_footage) {
-                    footage = properties.property_footage + " ft<sup>2</sup>";
-                }
-                if (properties.property_footage_range) {
-                    footage = footage + "<br>(Range of " + properties.property_footage_range + " ft<sup>2</sup>)";
-                }
-                
-                // Insert a headline into that popup
-                var details = "<div>" + 
-                              "<h3>Address</h3><p>" + address + "</p>" +
-                              "<h3>Zoning</h3><p>" + zoning + "</p>" +
-                              "<h3>APN</h3><p>" + properties.APN + "</p>" +
-                              "<h3>Lease</h3><p>" + lease + "</p>" +
-                              "<h3>Use</h3><p>" + use + "</p>" +
-                              "<h3>Square Footage</h3><p>" + footage + "</p>" +
-                              "<h3>Contact</h3><p>" + "[coming soon]" + "</p>" +
-                              "</div>";
-                $(details).appendTo(popup);
-                // Add the popup to the map
-                popup.appendTo("#map");
             });
             
             // On mouseout, undo the mouseover changes
-            layer.on("mouseout", function (e) {
-                // Reverting the style to default
-                layer.setStyle(defaultParcelStyle);
-                // Destroy the popup
-                $("#popup-" + properties.APN).remove();
+            layer.on('mouseout', function (event) {
+                
+                // Will persist of clicked
+                if (!clicked) {
+                    destroyPopup(event, layer, properties);
+                }
+            
             });
           
         
@@ -203,7 +346,7 @@ $(document).ready(function() {
     function findParcels(collection, results, skipCount) {
         
         var dataUri = 'https://api.mongohq.com/databases/sitemybiz/collections/' + 
-                      collection + "/" +
+                      collection + '/' +
                       'documents?' +
                       '_apikey=' + 'unyeh7o6sy69tw0lw5y8' + '&' +
                       'limit=' + '100' + '&' + 
