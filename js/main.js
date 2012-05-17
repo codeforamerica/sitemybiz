@@ -1,3 +1,8 @@
+/* Author: Ruthie BenDor for Code for America
+
+*/
+
+
 // === CONFIG ===
 
 // map center
@@ -22,7 +27,7 @@ var defaultParcelStyle = {
         fillColor: '#2262CC'
     };
 
-// 
+// Create Popup Content
 function createPopupContent(properties) {
     
     var address = createAddressString(properties),
@@ -80,7 +85,7 @@ function createAddressString(properties) {
     
 }
 
-
+// Create zoning string
 function createZoningString(properties) {
     
     var zoning = '';
@@ -110,6 +115,7 @@ function createZoningString(properties) {
     return zoning;
 }
 
+// Create lease string
 function createLeaseString(properties) {
     
     var lease = '';
@@ -143,7 +149,7 @@ function createUseString(properties) {
     
 }
 
-// 
+// create Footage String
 function createFootageString(properties) {
     
     var footage = '';
@@ -164,7 +170,7 @@ function createFootageString(properties) {
     
 }
 
-// 
+// Create Popup
 function createPopup(event, layer, properties) {
     
     // Change the style to the highlighted version
