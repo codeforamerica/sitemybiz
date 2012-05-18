@@ -355,14 +355,18 @@ header {
   min-height: 2.8125em; /* 45px */
 }
 
-header h1, header p, header ul, header li {
+header h1,
+header p,
+header ul,
+header li {
   margin: 0;
   padding: 0 2em;
   display: block;
   float: left;
 }
 
-header p, header nav {
+header p,
+header nav {
   padding: 0.71875em 0; /* 11.5px */
 }
 
@@ -385,10 +389,28 @@ header nav a {
   position: absolute;
   bottom: 0;
   width: 100%;
-  z-index: 7;
+  z-index: 10;
   color: #FFF;
-  background: #CCC;
+  background: #7FFF7F;
+  min-height: 2.8125em; /* 45px */
 }
+
+#filters h3,
+#filters form {
+  margin: 0;
+  display: block;
+  float: left;
+  border-top: 3px solid #0A9E0A;
+}
+
+#filters h3 {
+  padding: 0 2em;
+}
+
+#filters form {
+  padding: 0.71875em 2em; /* 11.5px */
+}
+
 
 /* === Detail ======================= */
 
@@ -398,7 +420,7 @@ header nav a {
   top: 3.3125em;
   right: 5px;
   position: absolute;
-  z-index: 7;
+  z-index: 10;
   width: 20em;
   border-radius: 4px;
   -moz-border-radius: 4px;
