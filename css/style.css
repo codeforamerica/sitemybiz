@@ -73,9 +73,9 @@ body {
 /* === Links ======================== */
 
 a {
-  color: #c5d7f5 !important; /* important declaration because otherwise leaflet.js overrides */
-  border-bottom: 1px dotted #FFF !important;
-  text-decoration: none !important;
+  color: #c5d7f5;
+  border-bottom: 1px dotted #FFF;
+  text-decoration: none;
 }
 
 a:visited {
@@ -346,12 +346,12 @@ h1, h2, h3, h4, h5, h6 {
 /* === Masthead ===================== */
 
 header {
+  background-color: #CCC;
   overflow: auto;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 5;
-  background-color: #CCC;
   min-height: 2.8125em; /* 45px */
 }
 
@@ -373,26 +373,45 @@ header nav a {
 /* === Map ========================== */
 
 #map {
-  top: 2.8125em; /* 45px */
+  top: 0;
   width: 100%;
   height: 100%;
 }
 
-/* === Popup ======================== */
+/* === Filter pane ================== */
 
-#detail {
-  background: #2262CC;
-  color: #FFFFFF;
-  bottom: 0;
-  left: 0;
+#filters {
+  overflow: auto;
   position: absolute;
-  height: 20%;
+  bottom: 0;
   width: 100%;
-  border-top: 5px solid #ccc;
+  z-index: 7;
+  color: #FFF;
+  background: #CCC;
+}
+
+/* === Detail ======================= */
+
+#details {
+  background: rgba(0, 0, 0, 0.25);
+  color: #FFFFFF;
+  top: 3.3125em;
+  right: 5px;
+  position: absolute;
+  z-index: 7;
+  width: 20em;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
 
 .popup {
-  padding: 1em 10px;
+  background: #2262CC;
+  margin: 5px;
+  padding: 0.5em 10px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
 
 

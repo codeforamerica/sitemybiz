@@ -189,7 +189,7 @@ function createPopup(event, layer, properties) {
     $(popupContent).appendTo(popup);
 
     // Add the popup to the detail
-    popup.appendTo('#detail');
+    popup.appendTo('#details');
 }
 
 //

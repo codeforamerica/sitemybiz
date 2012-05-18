@@ -1,9 +1,9 @@
-/* =====================================
-Source
-http://code.leafletjs.com/leaflet-0.3.1/leaflet.css
-===================================== */
+/* =============================================================================
+   LEAFLET STYLES
+   forked from http://code.leafletjs.com/leaflet-0.3.1/leaflet.css
+   ========================================================================== */
 
-/* required styles */
+/* === Required Styles ============== */
 
 .leaflet-map-pane,
 .leaflet-tile,
@@ -16,7 +16,7 @@ http://code.leafletjs.com/leaflet-0.3.1/leaflet.css
 .leaflet-popup-pane,
 .leaflet-overlay-pane svg,
 .leaflet-zoom-box,
-.leaflet-image-layer { /* TODO optimize classes */
+.leaflet-image-layer {
   position: absolute;
 }
 
@@ -90,20 +90,22 @@ a.leaflet-active {
   outline: 2px solid orange;
 }
 
-
-/* Leaflet controls */
+/* === Leaflet Controls ============= */
 
 .leaflet-control {
   position: relative;
   z-index: 7;
 }
+
 .leaflet-top,
 .leaflet-bottom {
   position: absolute;
 }
+
 .leaflet-top {
-  top: 0;
+  top: 2.8125em; /* 45px */
 }
+
 .leaflet-right {
   right: 0;
 }
@@ -221,7 +223,6 @@ a.leaflet-active {
 .leaflet-control-layers-expanded {
   background: #fff;
   color: #333;
-  font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
   padding: 6px 10px 6px 6px;
 }
 
@@ -242,17 +243,24 @@ a.leaflet-active {
 }
 
 .leaflet-container .leaflet-control-attribution {
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 0 7px #ccc;
-  -moz-box-shadow: 0 0 7px #ccc;
-  -webkit-box-shadow: 0 0 7px #ccc;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
   color: #333;
-  font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
   margin: 0;
-  padding: 0 5px;
+  padding: 0.5em;
+  font-size: 0.75em;
+  bottom: 4em;
+  right: 5px;
 }
 
-/* Fade animations */
+.leaflet-container .leaflet-control-attribution a {
+  color: #333;
+  border-bottom: 1px dotted #333;
+}
+
+/* === Fade Animations ============== */
 
 .leaflet-fade-anim .leaflet-tile {
   opacity: 0;
@@ -289,7 +297,7 @@ a.leaflet-active {
   visibility: hidden;
 }
 
-/* Popup layout */
+/* === Popup Layout ================= */
 
 .leaflet-popup {
   position: absolute;
@@ -339,7 +347,7 @@ a.leaflet-active {
   margin: 18px 0;
 }
 
-/* Visual appearance */
+/* === Visual Appearance ============ */
 
 .leaflet-container {
   background: #ddd;

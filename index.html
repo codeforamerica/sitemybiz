@@ -6,12 +6,12 @@
   <!-- Google Web Fonts -->
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Gudea|Patua+One">
 
+  <!-- App styles -->
+  <link rel="stylesheet" href="css/style.css">
+
   <!-- Leaflet -->
   <link rel="stylesheet" href="css/leaflet.css">
   <link rel="stylesheet" href="css/leaflet.ie.css">
-
-  <!-- App Styles -->
-  <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -27,14 +27,32 @@
     </nav>
   </header>
 
-  <!-- Map -->
+  <!-- Details pane -->
+  <div id="details"></div>
+
+  <!-- Map pane -->
   <div id="map"></div>
 
-  <!-- Details -->
-  <div id="detail"></div>
-
-  <!-- Filters -->
-  <div id="filters"></div>
+  <!-- Filters pane -->
+  <div id="filters">
+    <p>Filter by:</p>
+    
+    <form>
+      
+      <label for="zoning">Zoning:</label>
+      <select name="zoning" id="zoning">
+        <option>Zoning A</option>
+        <option>Zoning B</option>
+        <option>Zoning C</option>
+      </select>
+      
+      <label for="lease">Lease:</label>
+      <span><input type="range" name="lease" id="lease" value="0" min="0" max="100"></span>
+      
+      <label>Square Footage:</label>
+      <span>From <input type="text" name="footage_min" id="footage_min"> to <input type="text" name="footage_max" id="footage_max"> ft<sup2</sup></span>
+    </form>
+  </div>
 
   <!-- Scripts -->
   <script src="js/vendor/jquery-1.7.2.min.js"></script>
