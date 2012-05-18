@@ -30,18 +30,16 @@ var defaultParcelStyle = {
 // Create Popup Content
 function createPopupContent(properties) {
     
-    var address = createAddressString(properties),
+    var location = createLocationString(properties),
         zoning = createZoningString(properties),
         lease = createLeaseString(properties),
         use = createUseString(properties),
         footage = createFootageString(properties),
         details = '<div>' + 
-                  '<h3>Address</h3><p>' + address + '</p>' +
-                  '<h3>Zoning</h3><p>' + zoning + '</p>' +
-                  '<h3>APN</h3><p>' + properties.APN + '</p>' +
-                  '<h3>Lease</h3><p>' + lease + '</p>' +
-                  '<h3>Use</h3><p>' + use + '</p>' +
+                  '<h3>Location</h3><p>' + location + '</p>' +
+                  '<h3>Zoning &amp; Use</h3><p>' + zoning + '<br>' + use + '</p>' +
                   '<h3>Square Footage</h3><p>' + footage + '</p>' +
+                  '<h3>Lease</h3><p>' + lease + '</p>' +
                   '<h3>Contact</h3><p>' + '[coming soon]' + '</p>' +
                   '</div>';
         
@@ -49,9 +47,11 @@ function createPopupContent(properties) {
 }
 
 // TODO make this work for craigslist data
-function createAddressString(properties) {
+function createLocationString(properties) {
     
-    var address = '';
+    var address = '',
+        apn = properties.APN || '',
+        location = '';
     
     if (properties.property_address_street) {
         address = properties.property_address_street;
@@ -81,7 +81,9 @@ function createAddressString(properties) {
         address = address + properties.property_address_zip;
     }
     
-    return address;
+    location = address + '<br>(Parcel APN: ' + apn + ')';
+    
+    return location;
     
 }
 
