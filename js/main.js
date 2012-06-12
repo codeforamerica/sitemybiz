@@ -5,6 +5,12 @@
 
 // === CONFIG ===
 
+// Gross lease information
+var GROSS_INFO = "A gross lease is a lease in which the landlord agrees to pay all expenses usually associated with property ownership."
+
+// NNN lease information
+var NNN_INFO = "NNN stands for triple net lease. In such a lease the tenant agrees to pay all expenses usually associated with property ownership."
+
 // map center
 var LATLNG_CENTER = { 'lat': 36.97513 , 'lng': -122.024117 }; // Santa Cruz, dude
 
@@ -194,13 +200,13 @@ function createPopup(event, layer, properties) {
     popup.appendTo('#details');
 
     $('#propertyGross').on('mouseover', function(event) {
-        $('#grossWhatDoesThisMean').text('Hello')});
+        $('#grossWhatDoesThisMean').text(GROSS_INFO)});
   
     $('#propertyGross').on('mouseout', function(event) {
         $('#grossWhatDoesThisMean').text('')});
 
     $('#propertyNNN').on('mouseover', function(event) {
-        $('#nnnWhatDoesThisMean').text('Hello')});
+        $('#nnnWhatDoesThisMean').text(NNN_INFO)});
 
     $('#propertyNNN').on('mouseout', function(event) {
         $('#nnnWhatDoesThisMean').text('')});
