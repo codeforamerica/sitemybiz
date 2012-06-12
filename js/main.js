@@ -123,11 +123,11 @@ function createLeaseString(properties) {
     var lease = '';
     
     if (properties.property_gross) {
-        lease = '$' + properties.property_gross + '/ft<sup>2</sup> gross (<a href="#">What does this mean?</a>)';
+        lease = '$' + properties.property_gross + '/ft<sup>2</sup> gross (<a href="#" id="property_gross">What does this mean?</a>)<p id="gross_what_does_this_mean"><p>';
     }
     
     if (properties.property_nnn) {
-        lease = '$' + properties.property_nnn + '/ft<sup>2</sup> NNN (<a href="#">What does this mean?</a>)';
+        lease = '$' + properties.property_nnn + '/ft<sup>2</sup> NNN (<a href="#" id="property_nnn">What does this mean?</a>)<p id="nnn_what_does_this_mean"><p>';
     }
     
     if (lease === '') {
@@ -204,6 +204,18 @@ function destroyPopup(event, layer, properties) {
     $('#popup-' + properties.APN).remove();
     
 }
+
+//Display What does this mean information
+$('#property_gross').click(function(){
+    var what_is = $('#gross_what_does_this_mean').text();
+    $what_is.text("In a gross lease the landlord is responsible for all property charges routinely incurred by ownership.");
+)}
+
+$('#property_nnn').click(function(){
+    var what_is = $('#nnn_what_does_this_mean').text();
+    $what_is.text("NNN stands for triple net lease. In a triple net lease the tenant agrees to pay all fees and charges routinely incurred by ownership. This includes real estate taxes, building insurance, maintenance, as well as any other normal fees expected under the agreement.");
+)}
+
 
 // Onready...
 $(document).ready(function() {
