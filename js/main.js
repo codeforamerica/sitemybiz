@@ -192,6 +192,18 @@ function createPopup(event, layer, properties) {
 
     // Add the popup to the detail
     popup.appendTo('#details');
+
+    $('#propertyGross').on('mouseover', function(event) {
+        $('#grossWhatDoesThisMean').text('Hello')});
+  
+    $('#propertyGross').on('mouseout', function(event) {
+        $('#grossWhatDoesThisMean').text('')});
+
+    $('#propertyNNN').on('mouseover', function(event) {
+        $('#nnnWhatDoesThisMean').text('Hello')});
+
+    $('#propertyNNN').on('mouseout', function(event) {
+        $('#nnnWhatDoesThisMean').text('')});
 }
 
 //
@@ -313,10 +325,6 @@ $(document).ready(function() {
 
     });
 
-    //Display What does this mean information
-    $('#propertyGross').mouseover($('#grossWhatDoesThisMean').text("In a gross lease the landlord is responsible for all property charges routinely incurred by ownership."));
-
-    $('#propertyNNN').mouseover($('#nnnWhatDoesThisMean').text("NNN stands for triple net lease. In a triple net lease the tenant agrees to pay all fees and charges routinely incurred by ownership. This includes real estate taxes, building insurance, maintenance, as well as any other normal fees expected under the agreement."));
     
     // Gets all documents from MongoHQ recursively, 100 at a time
     function findParcels(collection, results, skipCount) {
