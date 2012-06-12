@@ -206,12 +206,12 @@ function destroyPopup(event, layer, properties) {
 }
 
 //Display What does this mean information
-$('#property_gross').click(function(){
+$('#property_gross').hover(function(){
     var what_is = $('#gross_what_does_this_mean').text();
     $what_is.text("In a gross lease the landlord is responsible for all property charges routinely incurred by ownership.");
 )}
 
-$('#property_nnn').click(function(){
+$('#property_nnn').hover(function(){
     var what_is = $('#nnn_what_does_this_mean').text();
     $what_is.text("NNN stands for triple net lease. In a triple net lease the tenant agrees to pay all fees and charges routinely incurred by ownership. This includes real estate taxes, building insurance, maintenance, as well as any other normal fees expected under the agreement.");
 )}
