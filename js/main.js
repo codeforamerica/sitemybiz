@@ -212,6 +212,7 @@ $('#property_gross').mouseover(function(){
 })
 
 $('#property_nnn').mouseover(function(){
+    console.log("mouseover");
     var what_is = $('#nnn_what_does_this_mean').text();
     what_is.text("NNN stands for triple net lease. In a triple net lease the tenant agrees to pay all fees and charges routinely incurred by ownership. This includes real estate taxes, building insurance, maintenance, as well as any other normal fees expected under the agreement.");
 })
