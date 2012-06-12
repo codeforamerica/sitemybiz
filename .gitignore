@@ -1,9 +1,5 @@
 bin/*
 build/*
-connection.py
-create_index_on_properties.py
-find_available_parcels.py
 lib/*
-upload_properties.py
 include/*
 .Python
