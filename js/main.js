@@ -314,7 +314,7 @@ $(document).ready(function() {
     });
 
     //Display What does this mean information
-    $('#propertyGross').mouseover($('#grossWhatDoesThisMean).text("In a gross lease the landlord is responsible for all property charges routinely incurred by ownership."));
+    $('#propertyGross').mouseover($('#grossWhatDoesThisMean').text("In a gross lease the landlord is responsible for all property charges routinely incurred by ownership."));
 
     $('#propertyNNN').mouseover($('#nnnWhatDoesThisMean').text("NNN stands for triple net lease. In a triple net lease the tenant agrees to pay all fees and charges routinely incurred by ownership. This includes real estate taxes, building insurance, maintenance, as well as any other normal fees expected under the agreement."));
     
