@@ -306,6 +306,7 @@ $(document).ready(function() {
 
                 $(document).one('click', function (event) {
                     destroyPopup(event, layer, properties);
+                    clicked = false
                 });
 
 
