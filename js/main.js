@@ -19,45 +19,45 @@ var ZOOM = 14;
 
 // Define default and highlight styles for the parcel polygons
 var defaultParcelStyle = {
-        color: '#009900',
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.5,
-        fillColor: '#00FF00'
-    },
-    selectedParcelStyle = {
-        color: '#2262CC',
-        weight: 3,
-        opacity: 1,
-        fillOpacity: 0.5,
-        fillColor: '#2262CC'
-    };
+    color: '#009900',
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.5,
+    fillColor: '#00FF00'
+},
+selectedParcelStyle = {
+    color: '#2262CC',
+    weight: 3,
+    opacity: 1,
+    fillOpacity: 0.5,
+    fillColor: '#2262CC'
+};
 
 // Create Popup Content
 function createPopupContent(properties) {
 
     var location = createLocationString(properties),
-        zoning = createZoningString(properties),
-        lease = createLeaseString(properties),
-        use = createUseString(properties),
-        footage = createFootageString(properties),
-        details = '<div>' +
-                  '<h3>Location</h3><p>' + location + '</p>' +
-                  '<h3>Zoning &amp; Use</h3><p>' + zoning + '<br>' + use + '</p>' +
-                  '<h3>Square Footage</h3><p>' + footage + '</p>' +
-                  '<h3>Lease</h3><p>' + lease + '</p>' +
-                  '<h3>Contact</h3><p>' + '[coming soon]' + '</p>' +
-                  '</div>';
+    zoning = createZoningString(properties),
+    lease = createLeaseString(properties),
+    use = createUseString(properties),
+    footage = createFootageString(properties),
+    details = '<div>' +
+    '<h3>Location</h3><p>' + location + '</p>' +
+    '<h3>Zoning &amp; Use</h3><p>' + zoning + '<br>' + use + '</p>' +
+    '<h3>Square Footage</h3><p>' + footage + '</p>' +
+    '<h3>Lease</h3><p>' + lease + '</p>' +
+    '<h3>Contact</h3><p>' + '[coming soon]' + '</p>' +
+    '</div>';
 
-        return details;
+    return details;
 }
 
 // TODO make this work for craigslist data
 function createLocationString(properties) {
 
     var address = '',
-        apn = properties.APN || '',
-        location = '';
+    apn = properties.APN || '',
+    location = '';
 
     if (properties.property_address_street) {
         address = properties.property_address_street;
@@ -111,16 +111,16 @@ function createZoningString(properties) {
     }
 
     if ( (properties.property_zoning_2_full && properties.property_zoning_3_full)
-         ||
-         (properties.property_zoning_1_full && properties.property_zoning_3_full) ) {
+       ||
+       (properties.property_zoning_1_full && properties.property_zoning_3_full) ) {
         zoning = zoning + ' and ';
-    }
+}
 
-    if (properties.property_zoning_3_full) {
-        zoning = zoning + properties.property_zoning_3_full;
-    }
+if (properties.property_zoning_3_full) {
+    zoning = zoning + properties.property_zoning_3_full;
+}
 
-    return zoning;
+return zoning;
 }
 
 // Create lease string
@@ -242,8 +242,8 @@ $(document).ready(function() {
 
     // Create base layer (using Toner tiles from Stamen)
     var baseUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.jpg',
-        attrib = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
-        baseLayer = new L.TileLayer(baseUrl, {attribution: attrib, maxZoom:18});
+    attrib = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+    baseLayer = new L.TileLayer(baseUrl, {attribution: attrib, maxZoom:18});
 
     // Add the base layer to map
     map.addLayer(baseLayer);
@@ -273,7 +273,9 @@ $(document).ready(function() {
             // On mouseover, show details
             layer.on('mouseover', function (event) {
 
-                createPopup(event, layer, properties);
+                if (!clicked) {
+                    createPopup(event, layer, properties);
+                }
 
             });
 
@@ -296,7 +298,7 @@ $(document).ready(function() {
 
             4. One parcel is hovered while another has been clicked on:
                   Do nothing
-            */
+                  */
 
 
             // On click, persist details
@@ -325,20 +327,20 @@ $(document).ready(function() {
 
         // Close the "anonymous" wrapper function, and call it while passing
         // in the variables necessary to make the events work the way we want.
-        })(e.layer, e.properties);
+    })(e.layer, e.properties);
 
-    });
+});
 
 
     // Gets all documents from MongoHQ recursively, 100 at a time
     function findParcels(collection, results, skipCount) {
 
         var dataUri = 'https://api.mongohq.com/databases/sitemybiz/collections/' +
-                      collection + '/' +
-                      'documents?' +
-                      '_apikey=' + 'unyeh7o6sy69tw0lw5y8' + '&' +
-                      'limit=' + '100' + '&' +
-                      'skip=' + skipCount;
+        collection + '/' +
+        'documents?' +
+        '_apikey=' + 'unyeh7o6sy69tw0lw5y8' + '&' +
+        'limit=' + '100' + '&' +
+        'skip=' + skipCount;
 
         // keep calling until we cannot get any more data from API
         $.getJSON(dataUri, function(data) {
