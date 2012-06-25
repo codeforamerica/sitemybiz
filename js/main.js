@@ -225,6 +225,8 @@ function destroyPopup(event, layer, properties) {
 
 
 // Onready...
+
+var clicked = false; // Pulled out so that it will apply globally and prevent popups if there has been a click
 $(document).ready(function() {
 
     // === MAP ===
@@ -269,12 +271,13 @@ $(document).ready(function() {
         // and the properties associated with this particular record.
         (function(layer, properties) {
 
-            var clicked = false;
 
             // On mouseover, show details
             layer.on('mouseover', function (event) {
 
-                createPopup(event, layer, properties);
+                if (!clicked) {
+                    createPopup(event, layer, properties);
+                }
 
             });
 
