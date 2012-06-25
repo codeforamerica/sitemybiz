@@ -261,6 +261,8 @@ $(document).ready(function() {
     // data, setting styles and regulating user interactions.
     parcelLayer.on('featureparse', function (e) {
 
+        var clicked = false;
+
         // Load the default style
         e.layer.setStyle(defaultParcelStyle);
 
@@ -268,7 +270,6 @@ $(document).ready(function() {
         // and the properties associated with this particular record.
         (function(layer, properties) {
 
-            var clicked = false;
 
             // On mouseover, show details
             layer.on('mouseover', function (event) {
