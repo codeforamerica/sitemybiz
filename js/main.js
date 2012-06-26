@@ -300,6 +300,9 @@ $(document).ready(function() {
 
             4. One parcel is hovered while another has been clicked on:
                   Do nothing
+
+            5. The layer is clicked when a parcel is selected:
+                  Unselect the current parcel
                   */
 
 
