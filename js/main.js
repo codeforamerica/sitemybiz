@@ -266,6 +266,7 @@ $(document).ready(function() {
 
         // Load the default style
         e.layer.setStyle(defaultParcelStyle);
+        console.log(e.properties);
 
         // Create a self-invoking function that passes in the layer
         // and the properties associated with this particular record.
