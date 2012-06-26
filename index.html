@@ -1,56 +1,92 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-  <title>SiteMy.Biz -> Santa Cruz</title>
+  <head>
+    <title>SiteMy.Biz -> Santa Cruz</title>
 
-  <!-- Google Web Fonts -->
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Gudea|Patua+One">
+    <!-- Google Web Fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Gudea|Patua+One">
 
-  <!-- App styles -->
-  <link rel="stylesheet" href="css/style.css">
+    <!-- App styles -->
+    <link rel="stylesheet" href="css/style.css">
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="css/leaflet.css">
-  <link rel="stylesheet" href="css/leaflet.ie.css">
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/leaflet.ie.css">
 
-</head>
+  </head>
 
-<body>
-  <!-- Top bar -->
-  <header>
+  <body>
+    <!-- Top bar -->
+    <header>
     <h1 class="masthead">SiteMy.Biz</h1>
     <p class="tagline">Find commercial space for rent in Santa Cruz.</p>
     <nav>
-      <ul>
-        <li><a href="#">Add a listing</a></li>
-      </ul>
+    <ul>
+      <li><a href="#">Add a listing</a></li>
+    </ul>
     </nav>
-  </header>
+    </header>
 
-  <!-- Details pane -->
-  <div id="details"></div>
+    <!-- Details pane -->
+    <div id="details"></div>
 
-  <!-- Map pane -->
-  <div id="map"></div>
+    <!-- Map pane -->
+    <div id="map"></div>
 
-  <!-- Filters pane -->
-  <div id="filters">
-    <h3>Filter by:</h3>
-    
-    <form method="post" action="">
-      
-      <label for="zoning">Zoning:</label>
-      <select name="zoning" id="zoning">
-        <option>Zoning A</option>
-        <option>Zoning B</option>
-        <option>Zoning C</option>
-      </select>
-      
-      <label for="lease">Lease:</label>
-      <span><input type="range" name="lease" id="lease" value="0" min="0" max="100"></span>
-      
-      <label>Square Footage:</label>
-      <span>From <input type="text" name="footage_min" id="footage_min"> to <input type="text" name="footage_max" id="footage_max"> ft<sup2</sup></span>
+    <!-- Filters pane -->
+    <div id="filters">
+      <h3>Filter by:</h3>
+
+      <form method="post" action="">
+
+        <label for="zoning">Zoning:</label>
+        <select name="zoning" id="zoning">
+          <option>
+          CBD - CENTRAL BUSINESS DIS
+          </option>
+          <option>
+          CBDE - SUBDIST LOWER PACIF
+          </option>
+          <option>
+          CC - COMMUNITY COMMERCIAL
+          </option>
+          <option>
+          CN - NEIGHBORHOOD COMERCL
+          </option>
+          <option>
+          CT - THOROUGHFARE COMERCL
+          </option>
+          <option>
+          IG - GENERAL INDUSTRIAL
+          </option>
+          <option>
+          IGP2 - GENERAL INDUS PERF 2
+          </option>
+          <option>
+          PA - PROFESS &amp; ADMIN
+          </option>
+          <option>
+          PF - PUBLIC FACILITY
+          </option>
+          <option>
+          R15 - SINGLE FAMILY RES
+          </option>
+          <option>
+          RL - MULTIPLE RES-LOW
+          </option>
+          <option>
+          RM - MULTIPLE RES-MEDIUM
+          </option>
+          <option>
+          RTC - TOURIST BEACH COMM
+          </option>
+        </select>
+
+        <label for="lease">Lease:</label>
+        <span><input type="range" name="lease" id="lease" value="0" min="0" max="100"></span>
+
+        <label>Square Footage:</label>
+        <span>From <input type="text" name="footage_min" id="footage_min"> to <input type="text" name="footage_max" id="footage_max"> ft<sup2</sup></span>
     </form>
   </div>
 
@@ -62,3 +98,4 @@
 
 </body>
 </html>
+
