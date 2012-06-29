@@ -276,7 +276,7 @@ $(document).ready(function() {
         console.log(e.properties.property_zoning_1_full);
         $('form#filter select').change(function() {
             console.log('hello')
-            console.log($('#zoning').value)
+            console.log($('#zoning').text)
 
         });
 
