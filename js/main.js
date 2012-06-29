@@ -392,7 +392,7 @@ $(document).ready(function() {
 });
 
 function showValue(value){
-  $('#lease-value').text(roundNum(value));
+  $('#lease-value').text(roundNum(value, 2));
 }
 
 function roundNum(num, dec){
