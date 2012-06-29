@@ -341,6 +341,8 @@ $(document).ready(function() {
             // Filtering
             $('form#filter').change(function() {
                 var zone = $('select#zoning').val();
+                var lease = $('input#lease').val();
+                console.log(lease)
                 if ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code))
                     layer.setStyle(filterParcelStyle);
                 else
