@@ -266,7 +266,7 @@ $(document).ready(function() {
 
         // Load the default style
         e.layer.setStyle(defaultParcelStyle);
-        console.log(e.properties);
+        console.log(e.properties.property_zoning_1_full);
 
         // Create a self-invoking function that passes in the layer
         // and the properties associated with this particular record.
