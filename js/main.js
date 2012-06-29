@@ -272,17 +272,7 @@ $(document).ready(function() {
 
 
         // Load the default style
-        $('form#filter select').change(function() {
-            var zone = $('select#zoning').val();
-            if (zone == "ALL") {
-                console.log('all');
-                e.layer.setStyle(defaultParcelStyle);
-            }
-            else if (zone == e.properties.property_zoning_1_full) {
-                console.log('filter');
-                e.layer.setStyle(filterParcelStyle);
-            }
-        });
+        e.layer.setStyle(defaultParcelStyle);
 
         // Create a self-invoking function that passes in the layer
         // and the properties associated with this particular record.
