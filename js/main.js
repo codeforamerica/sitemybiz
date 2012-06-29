@@ -272,9 +272,13 @@ $(document).ready(function() {
 
 
         // Load the default style
-        e.layer.setStyle(defaultParcelStyle);
         console.log(e.properties.property_zoning_1_full);
         $('form#filter select').change(function() {
+            var zone = $('select#zoning').val();
+            if (zone == "ALL")
+                e.layer.setStyle(defaultParcelStyle);
+            else if (zone == e.properties.property_zoning_1_full)
+                e.layer.setStyle(filterParcelStyle);
             console.log($('select#zoning option:selected').val());
         });
 
