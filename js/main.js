@@ -341,9 +341,11 @@ $(document).ready(function() {
             $('form#filter').change(function() {
                 zone = $('select#zoning').val();
                 if (zone == "ALL") {
-                    console.log('all')
+                    console.log('all');
+                    layer.setStyle(defaultParcelStyle);
                 } else {
-                    console.log(zone)
+                    console.log(zone);
+                    layer.setStyle(filterParcelStyle);
                 }
             });
 
