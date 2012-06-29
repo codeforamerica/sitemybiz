@@ -273,6 +273,7 @@ $(document).ready(function() {
 
         // Load the default style
         e.layer.setStyle(defaultParcelStyle);
+        console.log(e.properties);
 
         // Create a self-invoking function that passes in the layer
         // and the properties associated with this particular record.
@@ -344,7 +345,7 @@ $(document).ready(function() {
                 if (zone == "ALL") {
                     console.log('all');
                     layer.setStyle(defaultParcelStyle);
-                } else if (zone = properties.property_zoning_1_full) {
+                } else if (zone == properties.property_zoning_1_full) {
                     console.log(zone);
                     layer.setStyle(filterParcelStyle);
                 }
