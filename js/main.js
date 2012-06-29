@@ -342,7 +342,7 @@ $(document).ready(function() {
             $('form#filter').change(function() {
                 var zone = $('select#zoning').val();
                 var lease = $('input#lease').val();
-                var matches_zone = ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code))
+                var matches_zone = ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code) || (zone == "ALL"))
                 var matches_lease = ((lease < properties.property_nnn) || (lease < properties.property_gross))
                 layer.setStyle(defaultParcelStyle);
                 if (matches_zone && matches_lease)
