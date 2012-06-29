@@ -345,7 +345,7 @@ $(document).ready(function() {
                 if (zone == "ALL") {
                     console.log('all');
                     layer.setStyle(defaultParcelStyle);
-                } else if (zone == properties.property_zoning_1_full) {
+                } else if (zone == properties.property_zoning_1_code) {
                     console.log(zone);
                     layer.setStyle(filterParcelStyle);
                 }
