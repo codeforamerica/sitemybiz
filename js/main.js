@@ -344,6 +344,7 @@ $(document).ready(function() {
                 var lease = $('input#lease').val();
                 var min = $('input#footage_min').val();
                 var max = $('input#footage_max').val();
+                var value = Math.max(properties.property_nnn, properties.property_gross);
                 if ($('input#footage_min').val() == "") {
                   min = 0;
                 }
@@ -352,7 +353,7 @@ $(document).ready(function() {
                 }
                 var matches_zone = ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code) || (zone == "ALL"));
                 var matches_lease = ((lease > properties.property_nnn) || (lease > properties.property_gross));
-                var matches_footage = ((min < properties.property_footage) && (max > properties.property_footage));
+                var matches_footage = ((min < value) && (max > value));
                 layer.setStyle(defaultParcelStyle);
                 if (matches_zone && matches_lease && matches_footage)
                     layer.setStyle(filterParcelStyle);
