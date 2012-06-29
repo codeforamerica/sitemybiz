@@ -339,7 +339,7 @@ $(document).ready(function() {
 
             // Filtering
             $('form#filter').change(function() {
-                zone = $('select#zoning').val();
+                var zone = $('select#zoning').val();
                 if (zone == "ALL") {
                     console.log('all');
                     layer.setStyle(defaultParcelStyle);
