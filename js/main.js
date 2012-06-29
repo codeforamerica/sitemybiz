@@ -25,6 +25,13 @@ var defaultParcelStyle = {
     fillOpacity: 0.5,
     fillColor: '#00FF00'
 },
+filterParcelStyle = {
+    color: '#990000',
+    weight: 3,
+    opacity: 1,
+    fillOpacity: 0.5,
+    fillColor: '#FF0000'
+},
 selectedParcelStyle = {
     color: '#2262CC',
     weight: 3,
@@ -267,6 +274,10 @@ $(document).ready(function() {
         // Load the default style
         e.layer.setStyle(defaultParcelStyle);
         console.log(e.properties.property_zoning_1_full);
+        $('form#filter select').change(function() {
+            console.log($(this).value)
+
+        });
 
         // Create a self-invoking function that passes in the layer
         // and the properties associated with this particular record.
