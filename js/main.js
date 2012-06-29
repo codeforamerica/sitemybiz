@@ -337,6 +337,17 @@ $(document).ready(function() {
 
             });
 
+            // Filtering
+            $('form#filter').change(function() {
+                zone = $('select#zoning').val();
+                if (zone == "ALL") {
+                    console.log('all')
+                } else {
+                    console.log(zone)
+                }
+            });
+
+
 
         // Close the "anonymous" wrapper function, and call it while passing
         // in the variables necessary to make the events work the way we want.
