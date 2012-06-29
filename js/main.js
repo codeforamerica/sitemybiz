@@ -275,9 +275,7 @@ $(document).ready(function() {
         e.layer.setStyle(defaultParcelStyle);
         console.log(e.properties.property_zoning_1_full);
         $('form#filter select').change(function() {
-            console.log('hello')
-            console.log($('#zoning').text)
-
+            console.log($('select#zoning option:selected').val()
         });
 
         // Create a self-invoking function that passes in the layer
