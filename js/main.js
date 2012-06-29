@@ -341,14 +341,10 @@ $(document).ready(function() {
             // Filtering
             $('form#filter').change(function() {
                 var zone = $('select#zoning').val();
-                console.log(zone)
-                if (zone == "ALL") {
-                    console.log('all');
-                    layer.setStyle(defaultParcelStyle);
-                } else if (zone == properties.property_zoning_1_code) {
-                    console.log(zone);
+                if ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code))
                     layer.setStyle(filterParcelStyle);
-                }
+                else
+                    layer.setStyle(defaultParcelStyle);
             });
 
 
