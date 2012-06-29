@@ -342,11 +342,11 @@ $(document).ready(function() {
             $('form#filter').change(function() {
                 var zone = $('select#zoning').val();
                 var lease = $('input#lease').val();
+                var matches_zone = ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code))
+                var matches_lease = ((lease < properties.property_nnn) || (lease < properties.property_gross))
                 layer.setStyle(defaultParcelStyle);
-                if ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code))
+                if (matches_zone && matches_lease)
                     layer.setStyle(filterParcelStyle);
-                if ((lease != 0) && ((lease < properties.property_nnn) || (lease < properties.property_gross)))
-                    layer.setStyle(defaultParcelStyle);
             });
 
 
