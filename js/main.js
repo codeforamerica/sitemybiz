@@ -351,7 +351,7 @@ $(document).ready(function() {
                   max = Number.MAX_VALUE;
                 }
                 var matches_zone = ((zone == properties.property_zoning_1_code) || (zone == properties.property_zoning_2_code) || (zone == "ALL"));
-                var matches_lease = ((lease < properties.property_nnn) || (lease < properties.property_gross));
+                var matches_lease = ((lease > properties.property_nnn) || (lease > properties.property_gross));
                 var matches_footage = ((min < properties.property_footage) && (max > properties.property_footage));
                 layer.setStyle(defaultParcelStyle);
                 if (matches_zone && matches_lease && matches_footage)
