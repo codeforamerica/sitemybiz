@@ -390,3 +390,7 @@ $(document).ready(function() {
     findParcels('available_parcels' , [], 0);
 
 });
+
+function showValue(value){
+  $('#lease-value').text(value);
+}

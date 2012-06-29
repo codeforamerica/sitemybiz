@@ -58,8 +58,8 @@
         </select>
 
         <label for="lease">Lease:</label>
-        <span><input type="range" name="lease" step="0.1" id="lease" value="0" min="0" max="5">
-          <output for="lease" onforminput="value = lease.valueAsNumber;"></output></span>
+        <span><input type="range" name="lease" step="0.1" id="lease" value="0" min="0" max="5" onchange="showValue(this.value)"></span>
+        <span id="lease-value">0</span>
 
         <label>Square Footage:</label>
         <span>From <input type="text" name="footage_min" id="footage_min"> to <input type="text" name="footage_max" id="footage_max"> ft<sup2</sup></span>
