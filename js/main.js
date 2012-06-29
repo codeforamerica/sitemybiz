@@ -392,5 +392,10 @@ $(document).ready(function() {
 });
 
 function showValue(value){
-  $('#lease-value').text(value);
+  $('#lease-value').text(roundNum(value));
+}
+
+function roundNum(num, dec){
+  var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
+  return result;
 }
