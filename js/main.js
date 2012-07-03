@@ -363,6 +363,7 @@ $(document).ready(function() {
                 if (matches_zone && matches_lease && matches_footage) {
                     layer.setStyle(filterParcelStyle);
                     filtered = true;
+                }
             });
 
 
