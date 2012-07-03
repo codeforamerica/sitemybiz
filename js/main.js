@@ -220,10 +220,14 @@ function createPopup(event, layer, properties) {
 }
 
 //
-function destroyPopup(event, layer, properties) {
+function destroyPopup(event, layer, properties, filtered) {
 
-    // Reverting the style to default
-    layer.setStyle(defaultParcelStyle);
+    // Reverting the style to default unless filtered, then set to filtered style
+    if (!filtered) {
+      layer.setStyle(defaultParcelStyle);
+    } else {
+      layer.setStyle(filterParcelStyle);
+    }
 
     // Destroy the popup
     $('#popup-' + properties.APN).remove();
@@ -273,7 +277,7 @@ $(document).ready(function() {
 
         // Load the default style
         e.layer.setStyle(defaultParcelStyle);
-        console.log(e.properties);
+        var filtered = false;
 
         // Create a self-invoking function that passes in the layer
         // and the properties associated with this particular record.
@@ -319,7 +323,7 @@ $(document).ready(function() {
 
 
                 $(document).one('click', function (event) {
-                    destroyPopup(event, layer, properties);
+                    destroyPopup(event, layer, properties, filtered);
                     clicked = false
                 });
 
@@ -333,7 +337,7 @@ $(document).ready(function() {
 
                 // Will persist if clicked
                 if (!clicked) {
-                    destroyPopup(event, layer, properties);
+                    destroyPopup(event, layer, properties, filtered);
                 }
 
             });
@@ -355,8 +359,10 @@ $(document).ready(function() {
                 var matches_lease = ((lease > value) || (lease > value));
                 var matches_footage = ((min < properties.property_footage) && (max > properties.property_footage));
                 layer.setStyle(defaultParcelStyle);
-                if (matches_zone && matches_lease && matches_footage)
+                filtered = false;
+                if (matches_zone && matches_lease && matches_footage) {
                     layer.setStyle(filterParcelStyle);
+                    filtered = true;
             });
 
 
